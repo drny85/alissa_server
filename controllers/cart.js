@@ -23,22 +23,38 @@ exports.createCart = (req, res) => {
 
 exports.addToCart = (req, res) => {
     const cartId = req.params.id;
+    console.log('CartId:', cartId);
     const id = req.body._id;
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
     const image = req.body.image;
 
-    Cart.findOneAndUpdate({
+    Cart.findOne({
             _id: cartId
-        })
-        .then(cart => {
-            if (cart) {
-                console.log(cart);
+        }).then(cart => {
 
-            }
+            return cart
+        }).then(c => {
+            let quantity = 1;
+            c.items.push({
+                    _id: id,
+                    name: name,
+                    description: description,
+                    price: price,
+                    image: image,
+                    quantity: quantity
+                },
+                c.quantity++)
+
+            return c.save()
+        })
+
+        .then(result => {
+            res.json(result);
         })
         .catch(err => console.log(err));
+
 }
 
 exports.getCartById = (req, res) => {
