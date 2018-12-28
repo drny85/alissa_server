@@ -4,8 +4,9 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
 
-const MONGO_URL = `mongodb+srv://alissa:Alissa2019@cluster0-gefrm.mongodb.net/alissa`;
+const MONGO_URL = `mongodb+srv://alissa:${process.env.MY_MONGO_PASSWORD}@cluster0-gefrm.mongodb.net/alissa`;
 
 
 app.use(cors());
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-require('dotenv').config()
+
 
 app.get('/', (req, res) => {
     res.send('Hello');
@@ -22,9 +23,12 @@ app.get('/', (req, res) => {
 
 const programRoutes = require('./routes/program');
 const cartRoutes = require('./routes/cart');
+const emailRoutes = require('./routes/email');
+
 
 app.use(programRoutes);
 app.use('/cart', cartRoutes);
+app.use('/email', emailRoutes);
 
 
 

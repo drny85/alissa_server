@@ -1,4 +1,5 @@
 const Program = require('../models/program');
+const Email = require('./email/email');
 
 exports.addProgram = (req, res, next) => {
     const name = req.body.name;
@@ -21,6 +22,7 @@ exports.addProgram = (req, res, next) => {
                 message: 'something went wrong'
             });
             res.json(program);
+
         })
         .catch(err => console.log(err));
 }
