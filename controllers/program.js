@@ -1,5 +1,8 @@
 const Program = require('../models/program');
 const Email = require('./email/email');
+const {
+    validationResult
+} = require('express-validator/check');
 
 exports.addProgram = (req, res, next) => {
     const name = req.body.name;
@@ -7,6 +10,11 @@ exports.addProgram = (req, res, next) => {
     const price = req.body.price;
     const image = req.body.image;
     const fullDescription = req.body.fullDescription;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors.array());
+    }
 
     const program = new Program({
         name: name,
