@@ -11,5 +11,7 @@ router.post('/add/:id', cartController.addToCart);
 
 router.get('/:id', cartController.getCartById);
 
+router.post('/test', cartController.textCart);
+
 
 module.exports = router;

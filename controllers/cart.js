@@ -1,4 +1,5 @@
 const Cart = require('../models/cart');
+const SCart = require('../models/cart1');
 
 
 exports.createCart = (req, res) => {
@@ -65,4 +66,30 @@ exports.getCartById = (req, res) => {
         })
         .then(cart => res.json(cart))
         .catch(err => console.log(err));
+}
+
+
+exports.textCart = (req, res, next) => {
+    const _id = 1;
+    const name = req.body.name;
+    const description = req.body.description;
+    const price = req.body.price;
+    const image = req.body.image;
+    console.log('ID', _id);
+
+    const item = {
+        _id: _id,
+        name: name,
+        description: description,
+        price: price,
+        image: image,
+        quantity: 1
+    }
+
+    SCart.addToCart(item);
+    SCart.calculatePrice;
+    console.log('Cart', SCart.items);
+    console.log('price', SCart.totalPrice);
+
+
 }

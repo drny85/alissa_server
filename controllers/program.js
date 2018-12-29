@@ -24,7 +24,7 @@ exports.addProgram = (req, res, next) => {
             res.json(program);
 
         })
-        .catch(err => console.log(err));
+        .catch(err => next(err));
 }
 
 
@@ -43,6 +43,7 @@ exports.updateProgram = (req, res) => {
     const id = req.body._id;
     const name = req.body.name;
     const description = req.body.description;
+    const fullDescription = req.body.fullDescription;
     const price = req.body.price;
     const image = req.body.image;
 
@@ -50,13 +51,16 @@ exports.updateProgram = (req, res) => {
         Program.findByIdAndUpdate(id, {
                 name: name,
                 description: description,
+                fullDescription: fullDescription,
                 price: price,
                 image: image
             }, {
                 new: true
             })
-            .then(program => {
-                res.json(program);
+            .sort('-addedOn')
+            .exec()
+            .then(programs => {
+                res.json(programs);
             })
             .catch(err => console.log(err));
     }
