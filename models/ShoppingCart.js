@@ -37,8 +37,8 @@ class ShoppingCart {
         this.totalPrice = 0;
         this.programs.forEach(program => {
             let price = program.price;
-            let qty = program.quantity;
-            let amount = price * qty;
+            let quantity = program.quantity;
+            let amount = price * quantity;
 
             this.totalPrice += amount;
         });
@@ -70,6 +70,31 @@ class ShoppingCart {
     }
 
 
+
+    deleteFromCart(program) {
+        if (this.inCart(program)) {
+            this.programs.forEach(p => {
+                if (p._id === program._id) {
+                    if (p.quantity <= 1) {
+                        this.programs.pop(program);
+                        this.quantity = 0;
+                        this.calculateTotal();
+                        console.log('1', p.quantity);
+
+                    } else {
+                        p.quantity--;
+                        this.calculateTotal();
+                        console.log('2', p.quantity);
+
+                    }
+                }
+            })
+        }
+
+    }
+
+
 }
+
 
 module.exports = new ShoppingCart();

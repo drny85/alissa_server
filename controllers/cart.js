@@ -42,6 +42,7 @@ exports.addToCart = (req, res, next) => {
         .then(cart => {
             if (cart) {
                 //cart found, update current cart..
+                console.log(SCart.quantity);
                 SCart.addToCart(program);
                 cart.programs = SCart.programs,
                     cart.totalPrice = SCart.totalPrice,
@@ -60,6 +61,49 @@ exports.addToCart = (req, res, next) => {
         })
         .catch(err => console.log(err));
 
+
+}
+//DELETE FROM CART FUNCTION 
+exports.deleteFromCart = (req, res, next) => {
+
+    const cartId = req.params.cartId;
+    const _id = req.body._id;
+    const name = req.body.name;
+    const description = req.body.description;
+    const price = req.body.price;
+    const image = req.body.image;
+    const quantity = req.body.quantity;
+
+    let program = {
+        _id: _id,
+        name: name,
+        description: description,
+        price: price,
+        image: image,
+        quantity: quantity
+    };
+
+    Cart.findById(cartId)
+        .then(cart => {
+            if (cart) {
+                //cart found, update current cart..
+                console.log(SCart.quantity)
+                SCart.deleteFromCart(program);
+                cart.programs = SCart.programs,
+                    cart.totalPrice = SCart.totalPrice,
+                    cart.quantity = SCart.quantity
+
+                return cart.save();
+            }
+        })
+        .then(cart => {
+            res.json({
+                cart: cart,
+                message: 'Program added to cart',
+                totalItem: SCart.getTotalItem
+            })
+        })
+        .catch(err => console.log(err));
 
 }
 
@@ -96,10 +140,12 @@ exports.textCart = (req, res, next) => {
     }
 
     SCart.addToCart(program);
-    //SCart.calculatePrice;
+    SCart.calculatePrice;
     console.log('Cart', SCart.programs);
     console.log('Totalprice', SCart.totalPrice);
     console.log('Qty', SCart.quantity);
+
+    SCart.deleteFromCart(program);
 
     return res.json({
         message: 'Added'

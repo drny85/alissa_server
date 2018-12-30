@@ -15,5 +15,7 @@ router.post('/test', cartController.textCart);
 
 router.post('/create', cartController.createCart);
 
+router.put('/update/:cartId', cartController.deleteFromCart);
+
 
 module.exports = router;
