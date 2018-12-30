@@ -12,14 +12,15 @@ exports.createCart = (req, res) => {
 
     cart.save()
         .then(cart => {
-            req.cart = cart;
+
             res.json(cart)
         })
         .catch(err => console.log(err));
 }
 
 exports.addToCart = (req, res, next) => {
-    const cartId = req.body.cartId;
+
+    const cartId = req.params.cartId;
     const _id = req.body._id;
     const name = req.body.name;
     const description = req.body.description;
@@ -30,27 +31,33 @@ exports.addToCart = (req, res, next) => {
         _id: _id,
         name: name,
         description: description,
-        price: parseInt(price, 10).toFixed(2),
+        price: price,
         image: image,
         quantity: 1
     };
 
+
+
     Cart.findById(cartId)
         .then(cart => {
             if (cart) {
-
                 //cart found, update current cart..
-                console.log(cart);
                 SCart.addToCart(program);
                 cart.programs = SCart.programs,
                     cart.totalPrice = SCart.totalPrice,
                     cart.quantity = SCart.quantity
 
                 return cart.save();
-
             }
         })
-        .then(cart => res.json(cart))
+        .then(cart => {
+
+            res.json({
+                cart: cart,
+                message: 'Program added to cart',
+                totalItem: SCart.getTotalItem
+            })
+        })
         .catch(err => console.log(err));
 
 
@@ -62,7 +69,12 @@ exports.getCartById = (req, res) => {
     Cart.findOne({
             _id: cartId
         })
-        .then(cart => res.json(cart))
+        .then(cart => {
+            res.json({
+                cart: cart,
+                totalItems: SCart.getTotalItem
+            });
+        })
         .catch(err => console.log(err));
 }
 

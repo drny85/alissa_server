@@ -6,6 +6,7 @@ class ShoppingCart {
         this.programs = []; // EMPTY ARRAY TO HOLD SC ITEMS
         this.quantity = 0; //KEEP TRACK OF SHOPPING CART QUANTITY
         this.totalPrice = 0 // KEEP TRACK OF SHOPPING CART TOTAL -- POPUPALATED BY CALCULATEPRICE()
+        this.totalItem = 0 //KEEP TRACK OF ALL ITEMS IN THE CART
     }
 
     //ADD A PROGRAM/ITEM TO THE CART
@@ -14,7 +15,7 @@ class ShoppingCart {
         if (!this.inCart(program)) {
             this.programs.push(program);
             this.quantity++;
-            this.totalPrice = this.calculateTotal()
+            this.totalPrice = this.calculateTotal();
             this.calculateTotal();
         } else {
 
@@ -58,6 +59,14 @@ class ShoppingCart {
         })
 
         return found;
+    }
+
+    get getTotalItem() {
+        let item = 0;
+        this.programs.forEach(p => {
+            item += p.quantity;
+        })
+        return item;
     }
 
 

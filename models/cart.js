@@ -6,8 +6,7 @@ const Schema = mongoose.Schema;
 const cartSchema = new Schema({
 
     programs: {
-        type: Schema.Types.Array,
-        ref: 'Program'
+        type: Object,
     },
     totalPrice: {
         type: Number,
