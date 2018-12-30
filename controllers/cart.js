@@ -88,7 +88,8 @@ exports.textCart = (req, res, next) => {
     SCart.addToCart(program);
     SCart.calculatePrice;
     console.log('Cart', SCart.programs);
-    console.log('price', SCart.totalPrice);
+    console.log('Totalprice', SCart.totalPrice);
+    console.log('Qty', SCart.quantity);
 
     return res.json({
         message: 'Added'

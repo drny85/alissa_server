@@ -12,6 +12,8 @@ class ShoppingCart {
 
         if (!this.inCart(program)) {
             this.programs.push(program);
+            this.quantity++;
+            this.calculateTotal();
         } else {
 
             this.programs.forEach(p => {
@@ -21,19 +23,28 @@ class ShoppingCart {
             })
 
             this.quantity++;
+            this.calculateTotal();
 
         }
+    }
 
+    calculateTotal() {
+        this.totalPrice = 0;
+        this.programs.forEach(program => {
+            let price = program.price;
+            let qty = program.quantity;
+            let amount = price * qty;
 
-
+            this.totalPrice += amount;
+        });
 
     }
 
+    // check if item already in cart..
     inCart(program) {
         let found = false;
         this.programs.forEach(p => {
             if (p._id === program['_id']) {
-
                 found = true
             } else {
                 found = false
@@ -43,14 +54,7 @@ class ShoppingCart {
         return found;
     }
 
-    get calculatePrice() {
-        let total = 0;
-        this.programs.forEach(p => {
-            total += p.price
-        })
 
-        return total;
-    }
 }
 
 module.exports = new ShoppingCart();
