@@ -1,5 +1,6 @@
-const Cart = require('../models/Cart');
 const SCart = require('../models/ShoppingCart');
+const Program = require('../models/Program');
+const Cart = require('../models/Cart');
 
 
 exports.createCart = (req, res) => {
@@ -22,39 +23,51 @@ exports.createCart = (req, res) => {
         .catch(err => console.log(err));
 }
 
-exports.addToCart = (req, res) => {
-    const cartId = req.params.id;
-    console.log('CartId:', cartId);
-    const id = req.body._id;
+exports.addToCart = (req, res, next) => {
+    const cartId = req.body.cartId;
+    const _id = req.body._id;
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
     const image = req.body.image;
 
-    Cart.findOne({
-            _id: cartId
-        }).then(cart => {
+    let program = {
+        _id: _id,
+        name: name,
+        description: description,
+        price: parseInt(price, 10).toFixed(2),
+        image: image,
+        quantity: 1
+    };
 
-            return cart
-        }).then(c => {
-            let quantity = 1;
-            c.items.push({
-                    _id: id,
-                    name: name,
-                    description: description,
-                    price: price,
-                    image: image,
-                    quantity: quantity
-                },
-                c.quantity++)
+    Cart.findById(cartId)
+        .then(cart => {
+            if (cart) {
+                //cart found, update current cart..
+                console.log('Cart Found');
+                SCart.addToCart(program);
+                return cart.save();
+            } else {
+                // cart not found, create a new cart
+                const cart = new Cart({
+                    programs: {
+                        program
+                    },
+                    totalPrice: 0,
+                    quantity: 0
+                })
 
-            return c.save()
+                SCart.addToCart(cart);
+                return cart.save();
+            }
         })
-
-        .then(result => {
-            res.json(result);
+        .then(cart => {
+            if (cart) {
+                console.log('same cart');
+                res.json(cart);
+            }
         })
-        .catch(err => console.log(err));
+        .catch(err => next(err));
 
 }
 
@@ -86,7 +99,7 @@ exports.textCart = (req, res, next) => {
     }
 
     SCart.addToCart(program);
-    SCart.calculatePrice;
+    //SCart.calculatePrice;
     console.log('Cart', SCart.programs);
     console.log('Totalprice', SCart.totalPrice);
     console.log('Qty', SCart.quantity);

@@ -14,6 +14,7 @@ class ShoppingCart {
         if (!this.inCart(program)) {
             this.programs.push(program);
             this.quantity++;
+            this.totalPrice = this.calculateTotal()
             this.calculateTotal();
         } else {
 
@@ -40,6 +41,8 @@ class ShoppingCart {
 
             this.totalPrice += amount;
         });
+
+        return this.totalPrice;
 
     }
 

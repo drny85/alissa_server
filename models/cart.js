@@ -4,20 +4,19 @@ const Program = require('./Program');
 const Schema = mongoose.Schema;
 
 const cartSchema = new Schema({
-    item: {
-        name: String,
-        drescription: String,
-        price: Number,
-        image: String
-    },
 
-    items: {
+    programs: {
         type: Schema.Types.Array,
         ref: 'Program'
     },
-
-    totalPrice: Number,
-    quantity: Number
+    totalPrice: {
+        type: Number,
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    }
 })
 
 const cart = mongoose.model('Cart', cartSchema);
