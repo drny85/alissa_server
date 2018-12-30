@@ -4,8 +4,8 @@ const router = express.Router();
 
 
 const cartController = require('../controllers/cart');
-
-router.get('/', cartController.createCart);
+//END POINT TO CREATE CART.
+router.post('/', cartController.createCart);
 
 router.post('/add', cartController.addToCart);
 

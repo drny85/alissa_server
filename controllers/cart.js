@@ -5,19 +5,14 @@ const Cart = require('../models/Cart');
 
 exports.createCart = (req, res) => {
     const cart = new Cart({
-        item: {
-            name: '',
-            description: '',
-            image: '',
-            price: 0
-        },
-        items: [],
+        programs: [],
         totalPrice: 0,
         quantity: 0
     })
 
     cart.save()
         .then(cart => {
+            req.cart = cart;
             res.json(cart)
         })
         .catch(err => console.log(err));
@@ -43,31 +38,21 @@ exports.addToCart = (req, res, next) => {
     Cart.findById(cartId)
         .then(cart => {
             if (cart) {
-                //cart found, update current cart..
-                console.log('Cart Found');
-                SCart.addToCart(program);
-                return cart.save();
-            } else {
-                // cart not found, create a new cart
-                const cart = new Cart({
-                    programs: {
-                        program
-                    },
-                    totalPrice: 0,
-                    quantity: 0
-                })
 
-                SCart.addToCart(cart);
+                //cart found, update current cart..
+                console.log(cart);
+                SCart.addToCart(program);
+                cart.programs = SCart.programs,
+                    cart.totalPrice = SCart.totalPrice,
+                    cart.quantity = SCart.quantity
+
                 return cart.save();
+
             }
         })
-        .then(cart => {
-            if (cart) {
-                console.log('same cart');
-                res.json(cart);
-            }
-        })
-        .catch(err => next(err));
+        .then(cart => res.json(cart))
+        .catch(err => console.log(err));
+
 
 }
 
