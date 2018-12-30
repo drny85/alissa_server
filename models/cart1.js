@@ -1,34 +1,52 @@
 //jshint esversion:6
-const item = require('../models/program');
+const program = require('./program');
 
 class ShoppingCart {
     constructor() {
-        this.items = [];
+        this.programs = [];
         this.quantity = 0;
         this.totalPrice = 0
     }
 
-    addToCart(item) {
-        let singleItem = item['_id'];
-        this.items.forEach(item => {
-            if (item['_id'] === singleItem) {
-                item['quantity']++;
+    addToCart(program) {
 
-            }
+        if (!this.inCart(program)) {
+            this.programs.push(program);
+        } else {
+
+            this.programs.forEach(p => {
+                if (p._id === program._id) {
+                    p.quantity++
+                }
+            })
+
+            this.quantity++;
+
+        }
 
 
-        });
-        this.items.push(item)
-
-        this.quantity++;
 
 
     }
 
+    inCart(program) {
+        let found = false;
+        this.programs.forEach(p => {
+            if (p._id === program['_id']) {
+
+                found = true
+            } else {
+                found = false
+            }
+        })
+
+        return found;
+    }
+
     get calculatePrice() {
         let total = 0;
-        this.items.forEach(item => {
-            total += item['price'] * item['quantity'];
+        this.programs.forEach(p => {
+            total += p.price
         })
 
         return total;

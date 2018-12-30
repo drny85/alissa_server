@@ -70,14 +70,13 @@ exports.getCartById = (req, res) => {
 
 
 exports.textCart = (req, res, next) => {
-    const _id = 1;
+    const _id = req.body._id;
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
     const image = req.body.image;
-    console.log('ID', _id);
 
-    const item = {
+    const program = {
         _id: _id,
         name: name,
         description: description,
@@ -86,10 +85,14 @@ exports.textCart = (req, res, next) => {
         quantity: 1
     }
 
-    SCart.addToCart(item);
+    SCart.addToCart(program);
     SCart.calculatePrice;
-    console.log('Cart', SCart.items);
+    console.log('Cart', SCart.programs);
     console.log('price', SCart.totalPrice);
+
+    return res.json({
+        message: 'Added'
+    });
 
 
 }
