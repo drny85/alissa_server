@@ -1,13 +1,14 @@
 //jshint esversion:6
-const program = require('./program');
+const program = require('./Program');
 
 class ShoppingCart {
     constructor() {
-        this.programs = [];
-        this.quantity = 0;
-        this.totalPrice = 0
+        this.programs = []; // EMPTY ARRAY TO HOLD SC ITEMS
+        this.quantity = 0; //KEEP TRACK OF SHOPPING CART QUANTITY
+        this.totalPrice = 0 // KEEP TRACK OF SHOPPING CART TOTAL -- POPUPALATED BY CALCULATEPRICE()
     }
 
+    //ADD A PROGRAM/ITEM TO THE CART
     addToCart(program) {
 
         if (!this.inCart(program)) {
@@ -28,6 +29,8 @@ class ShoppingCart {
         }
     }
 
+
+    //CALCULATE SHOPPING CART TOTAL PRICE
     calculateTotal() {
         this.totalPrice = 0;
         this.programs.forEach(program => {

@@ -1,5 +1,5 @@
-const Cart = require('../models/cart');
-const SCart = require('../models/cart1');
+const Cart = require('../models/Cart');
+const SCart = require('../models/ShoppingCart');
 
 
 exports.createCart = (req, res) => {
