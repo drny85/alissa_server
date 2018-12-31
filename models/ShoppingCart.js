@@ -73,6 +73,7 @@ class ShoppingCart {
 
     deleteFromCart(program) {
         if (this.inCart(program)) {
+
             this.programs.forEach(p => {
                 if (p._id === program._id) {
                     if (p.quantity <= 1) {

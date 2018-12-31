@@ -5,10 +5,11 @@ const {
 } = require('express-validator/check');
 
 exports.addProgram = (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host');
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
-    const image = req.body.image;
+    const image = url + '/' + req.file.path;
     const fullDescription = req.body.fullDescription;
 
     const errors = validationResult(req);
@@ -53,7 +54,7 @@ exports.updateProgram = (req, res) => {
     const description = req.body.description;
     const fullDescription = req.body.fullDescription;
     const price = req.body.price;
-    const image = req.body.image;
+    const image = req.file.path;
 
     if (id) {
         Program.findByIdAndUpdate(id, {

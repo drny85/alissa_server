@@ -1,6 +1,7 @@
 //jshint esversion:6
 const express = require('express');
 const app = express();
+const path = require('path');
 const mongoose = require('mongoose');
 const validador = require('express-validator');
 const bodyParser = require('body-parser');
@@ -11,6 +12,7 @@ const MONGO_URL = `mongodb+srv://alissa:${process.env.MY_MONGO_PASSWORD}@cluster
 
 
 app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
