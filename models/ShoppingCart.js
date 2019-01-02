@@ -74,25 +74,21 @@ class ShoppingCart {
     deleteFromCart(program) {
         if (this.inCart(program)) {
 
-            this.programs.forEach(p => {
-                if (p._id === program._id) {
-                    if (p.quantity <= 1) {
-                        this.programs.pop(program);
-                        this.quantity = 0;
-                        this.calculateTotal();
-                        console.log('1', p.quantity);
+            this.quantity--;
+            this.calculateTotal();
+            if (this.quantity <= 1) {
+                this.quantity = 0;
+                this.programs.pop(program)
+                this.calculateTotal();
+            }
 
-                    } else {
-                        p.quantity--;
-                        this.calculateTotal();
-                        console.log('2', p.quantity);
-
-                    }
-                }
-            })
         }
 
+
     }
+
+
+
 
 
 }
