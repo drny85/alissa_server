@@ -20,6 +20,8 @@ class ShoppingCart {
             this.programs.forEach(p => {
                 if (p._id === program._id) {
                     p.quantity++;
+                    this.calculateTotal();
+
                 }
             });
 
@@ -46,7 +48,7 @@ class ShoppingCart {
     inCart(program) {
         let found = false;
         this.programs.forEach(p => {
-            if (p._id === program["_id"]) {
+            if (p._id === program._id) {
                 found = true;
             } else {
                 found = false;

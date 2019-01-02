@@ -47,7 +47,7 @@ exports.addToCart = (req, res, next) => {
                 cart.programs = SCart.programs,
                     cart.totalPrice = SCart.totalPrice,
                     cart.quantity = SCart.quantity
-                // console.log('Cart quantity:', SCart.quantity);
+                console.log('Cart quantity:', SCart.quantity);
 
                 return cart.save();
             }
@@ -93,7 +93,7 @@ exports.deleteFromCart = (req, res, next) => {
                 cart.programs = SCart.programs,
                     cart.totalPrice = SCart.totalPrice,
                     cart.quantity = SCart.quantity
-                // console.log('Count at delete:', cart.quantity)
+                console.log('Count at delete:', cart.quantity)
 
                 return cart.save();
             }
