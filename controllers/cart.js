@@ -42,17 +42,18 @@ exports.addToCart = (req, res, next) => {
         .then(cart => {
             if (cart) {
                 //cart found, update current cart..
-                console.log(SCart.quantity);
+
                 SCart.addToCart(program);
                 cart.programs = SCart.programs,
                     cart.totalPrice = SCart.totalPrice,
                     cart.quantity = SCart.quantity
+                // console.log('Cart quantity:', SCart.quantity);
 
                 return cart.save();
             }
         })
         .then(cart => {
-
+            // console.log('Retured Cart:', cart);
             res.json({
                 cart: cart,
                 message: 'Program added to cart',
@@ -87,16 +88,18 @@ exports.deleteFromCart = (req, res, next) => {
         .then(cart => {
             if (cart) {
                 //cart found, update current cart..
-                console.log(SCart.quantity)
+
                 SCart.deleteFromCart(program);
                 cart.programs = SCart.programs,
                     cart.totalPrice = SCart.totalPrice,
                     cart.quantity = SCart.quantity
+                // console.log('Count at delete:', cart.quantity)
 
                 return cart.save();
             }
         })
         .then(cart => {
+            //console.log('Cart at Del:', cart);
             res.json({
                 cart: cart,
                 message: 'Program added to cart',
