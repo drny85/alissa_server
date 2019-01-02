@@ -48,13 +48,21 @@ exports.getPrograms = (req, res) => {
         .catch(err => console.log(err));
 }
 
-exports.updateProgram = (req, res) => {
+exports.updateProgram = (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host');
     const id = req.body._id;
+
     const name = req.body.name;
     const description = req.body.description;
     const fullDescription = req.body.fullDescription;
     const price = req.body.price;
-    const image = req.file.path;
+    let image;
+    if (req.file) {
+        image = url + '/' + req.file.path;
+    } else {
+        image = req.body.image;
+    }
+
 
     if (id) {
         Program.findByIdAndUpdate(id, {

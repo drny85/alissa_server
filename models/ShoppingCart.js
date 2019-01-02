@@ -67,7 +67,6 @@ class ShoppingCart {
     }
 
     deleteFromCart(program) {
-        const isInCart = this.inCart(program);
         this.programs.forEach(p => {
             if (p._id === program._id) {
                 if (p.quantity <= 1) {
@@ -82,6 +81,8 @@ class ShoppingCart {
                 }
             }
         })
+
+
     }
 }
 

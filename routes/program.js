@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
         cb(null, './uploads');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
+        cb(null, Date.now() + '-' + file.originalname.toLowerCase());
     }
 })
 
@@ -51,7 +51,7 @@ router.post('/add-program', upload.single('image'), [
 
 router.get('/program/:id', programController.editProgram);
 
-router.put('/program/:id', programController.updateProgram);
+router.put('/program/:id', upload.single('image'), programController.updateProgram);
 
 
 router.delete('/program/:id', programController.deleteProgram);
