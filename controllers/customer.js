@@ -17,6 +17,8 @@ exports.addCustomer = (req, res, next) => {
         zipcode
     } = req.body;
 
+    console.log(email);
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json(errors.array());
