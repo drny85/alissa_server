@@ -1,4 +1,6 @@
 const Program = require('../models/Program');
+const fs = require('fs');
+const path = require('path');
 const Email = require('./email/email');
 const {
     validationResult
@@ -77,7 +79,15 @@ exports.updateProgram = (req, res, next) => {
             .sort('-addedOn')
             .exec()
             .then(programs => {
+                let images;
+                //  console.log(imageToKeep);
                 res.json(programs);
+                fs.readdir('./uploads', (err, data) => {
+                    if (err) throw err;
+                    deleteImage(data, image);
+                })
+
+
             })
             .catch(err => console.log(err));
     }
@@ -111,6 +121,26 @@ exports.deleteProgram = (req, res) => {
             res.json(program)
         })
         .catch(err => console.log(err));
+
+
+}
+
+function deleteImage(data, uploaded) {
+    let imageTodelete;
+    let image;
+    let imageUploaded = uploaded.split('-')[1];
+
+    let count = 0;
+    data.forEach(p => {
+
+
+        image = p.split('-')[1];
+
+
+
+
+
+    })
 
 
 }

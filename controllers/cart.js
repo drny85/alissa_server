@@ -99,10 +99,10 @@ exports.deleteFromCart = (req, res, next) => {
             }
         })
         .then(cart => {
-            //console.log('Cart at Del:', cart);
+
             res.json({
                 cart: cart,
-                message: 'Program added to cart',
+                message: 'Program updated',
                 totalItem: SCart.getTotalItem
             })
         })
@@ -119,7 +119,7 @@ exports.getCartById = (req, res) => {
         .then(cart => {
             res.json({
                 cart: cart,
-                totalItems: SCart.getTotalItem
+                totalItem: SCart.getTotalItem
             });
         })
         .catch(err => console.log(err));
