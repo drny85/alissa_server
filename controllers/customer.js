@@ -17,31 +17,58 @@ exports.addCustomer = (req, res, next) => {
         zipcode
     } = req.body;
 
-    console.log(email);
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json(errors.array());
     }
 
-    const customer = new Customer({
-        name: name,
-        last_name: last_name,
-        email: email,
-        address: address,
-        apt: apt,
-        city: city,
-        state: state,
-        zipcode: zipcode
-    })
-
-    customer.save()
-        .then(customer => {
-            res.json(customer)
+    Customer.findOne({
+            email: email
         })
-        .catch(err => next(err));
+        .then(found => {
+
+            if (found) return res.status(400).json({
+                message: "Email already in use"
+            })
+
+            const customer = new Customer({
+                name: name,
+                last_name: last_name,
+                email: email,
+                address: address,
+                apt: apt,
+                city: city,
+                state: state,
+                zipcode: zipcode
+            })
+
+            customer.save()
+                .then(customer => {
+                    console.log('Customer', customer);
+                    res.json(customer)
+                })
+                .catch(err => next(err));
+        })
 
 
 
 
+
+
+}
+
+exports.getCustomerById = (req, res, next) => {
+    const id = req.params.id;
+    if (id) {
+        Customer.findOne({
+                _id: id
+            })
+            .then(customer => {
+                if (!customer) return res.status(400).json({
+                    message: 'No customer found'
+                })
+                res.json(customer)
+            })
+            .catch(err => next(err));
+    }
 }
