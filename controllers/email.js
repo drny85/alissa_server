@@ -1,3 +1,7 @@
+const {
+  validationResult
+} = require('express-validator/check');
+
 const Email = require("./email/email");
 exports.sendEmail = (req, res) => {
   const to = "alissajfitness@gmail.com";
@@ -7,6 +11,11 @@ exports.sendEmail = (req, res) => {
   //const message = req.body.message;
   const from = req.body.email;
   const program = req.body.program;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.array());
+  }
 
   return Email.sendMail({
       to: to,
