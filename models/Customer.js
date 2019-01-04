@@ -16,8 +16,7 @@ const customerSchema = new Schema({
         required: true
     },
     apt: {
-        type: String,
-        required: true
+        type: String
     },
     city: {
         type: String,
