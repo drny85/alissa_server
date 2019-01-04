@@ -35,7 +35,7 @@ exports.addCustomer = (req, res, next) => {
 
     customer.save()
         .then(customer => {
-            console.log('Customer', customer);
+
             res.json(customer)
         })
         .catch(err => next(err));
