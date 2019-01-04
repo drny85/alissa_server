@@ -29,12 +29,14 @@ const programRoutes = require('./routes/program');
 const cartRoutes = require('./routes/cart');
 const emailRoutes = require('./routes/email');
 const customerRoutes = require('./routes/customer');
+const paymentRoutes = require('./routes/payment');
 
 
 app.use(programRoutes);
 app.use('/cart', cartRoutes);
 app.use('/email', emailRoutes);
 app.use('/customer', customerRoutes);
+app.use(paymentRoutes);
 
 
 

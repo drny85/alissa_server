@@ -22,40 +22,26 @@ exports.addCustomer = (req, res, next) => {
         return res.status(400).json(errors.array());
     }
 
-    Customer.findOne({
-            email: email
+    const customer = new Customer({
+        name: name,
+        last_name: last_name,
+        email: email,
+        address: address,
+        apt: apt,
+        city: city,
+        state: state,
+        zipcode: zipcode
+    })
+
+    customer.save()
+        .then(customer => {
+            console.log('Customer', customer);
+            res.json(customer)
         })
-        .then(found => {
-
-            if (found) return res.status(400).json({
-                message: "Email already in use"
-            })
-
-            const customer = new Customer({
-                name: name,
-                last_name: last_name,
-                email: email,
-                address: address,
-                apt: apt,
-                city: city,
-                state: state,
-                zipcode: zipcode
-            })
-
-            customer.save()
-                .then(customer => {
-                    console.log('Customer', customer);
-                    res.json(customer)
-                })
-                .catch(err => next(err));
-        })
-
-
-
-
-
-
+        .catch(err => next(err));
 }
+
+
 
 exports.getCustomerById = (req, res, next) => {
     const id = req.params.id;
