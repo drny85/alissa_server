@@ -44,11 +44,19 @@ exports.chargeCustomer = (req, res, next) => {
             message: 'Something went wrong'
         })
 
-        res.status(200).json({
-            message: 'Payment success',
-            respond: charge.outcome,
-            status: charge.status
-        })
+        return Cart.findByIdAndUpdate(cart.cart._id, {
+                programs: [],
+                totalPrice: 0,
+                quantity: 0
+            })
+            .then(cart => {
+                res.status(200).json({
+                    message: 'Payment success',
+                    respond: charge.outcome,
+                    status: charge.status
+                })
+            })
+
     }).catch((err) => {
         // Deal with an error
         console.log(err);
